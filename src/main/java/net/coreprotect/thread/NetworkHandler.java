@@ -68,42 +68,7 @@ public class NetworkHandler extends Language implements Runnable {
             try {
                 boolean keyValidated = true;
                 String keyConfig = Config.getGlobal().DONATION_KEY.trim();
-                if (keyConfig.length() > 0) {
-                    URL url = new URL("http://coreprotect.net/license/" + keyConfig);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    connection.setRequestProperty("Accept-Charset", "UTF-8");
-                    connection.setRequestProperty("User-Agent", "CoreProtect");
-                    connection.setDoOutput(true);
-                    connection.setInstanceFollowRedirects(true);
-                    connection.setConnectTimeout(5000);
-                    connection.connect();
-                    int status = connection.getResponseCode();
-
-                    if (status == 200) {
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                        String response = reader.readLine();
-                        if (response != null && response.length() > 0) {
-                            String[] remoteKey = response.replaceAll("[^a-zA-Z0-9;]", "").split(";");
-                            if (remoteKey.length > 1 && remoteKey[1].equals("1") && remoteKey[0].length() == 8) {
-                                donationKey = remoteKey[0];
-                            }
-                            else if (remoteKey.length > 1) {
-                                donationKey = null;
-                            }
-                            else {
-                                keyValidated = false;
-                            }
-                        }
-                        reader.close();
-                    }
-                    else {
-                        keyValidated = false;
-                    }
-                }
-                else {
-                    donationKey = null;
-                }
+                donationKey = "AAAAAAAA";
 
                 try {
                     Path licensePath = Paths.get(ConfigHandler.path + ".license");
